@@ -92,10 +92,14 @@ def capture_loop(positions, sss, visible, capture_kinematics, capture_image):
         joint_pos = [[a for a in positions[index]['joint_position']]]
         print pos
         nh = sss.move("arm", joint_pos)
+        print nh.get_state()
         while nh.get_state() == 0:
             rospy.sleep(0.2)
+            print nh.get_state()
         if nh.get_state() != 3:
-            sss.move("torso", "home")
+            print nh.get_state()
+            raw_input("Error? Press enter when arm ready.")
+            #sss.move("torso", "home")
             nh = sss.move("arm", joint_pos)
             rospy.sleep(1)
             if nh.get_state() != 3:
